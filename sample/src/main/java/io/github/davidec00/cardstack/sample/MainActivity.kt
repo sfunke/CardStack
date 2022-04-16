@@ -7,9 +7,8 @@ import androidx.compose.ui.Modifier
 import io.github.davidec00.cardstack.CardStack
 import io.github.davidec00.cardstack.Item
 
-class MainActivity : ComponentActivity(){
-//    @ExperimentalMaterialApi
-    @OptIn(androidx.compose.material.ExperimentalMaterialApi::class)
+class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val item1 = Item(
             "https://f4.bcbits.com/img/0020592180_10.jpg",
@@ -31,14 +30,21 @@ class MainActivity : ComponentActivity(){
             "Violet",
             "43 miles from you"
         )
-        val items = mutableListOf(item1, item2, item3, item4)
+        val items = buildList {
+            repeat(30) {
+                addAll(listOf(item1, item2, item3, item4))
+            }
+        }
         super.onCreate(savedInstanceState)
 
         setContent {
             CardStack(
                 modifier = Modifier,
                 enableButtons = true,
-                items = items
+                items = items,
+                onEmptyStack = {
+                    println("Done!")
+                }
             )
         }
     }
